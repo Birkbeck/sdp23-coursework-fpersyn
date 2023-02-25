@@ -4,30 +4,34 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
-// TODO: write a JavaDoc for the class
-
-/** Represents an out Instruction.
+/** Represents a `out` Instruction.
  * @author Fred Persyn
  */
 public class OutInstruction extends Instruction {
-    private final RegisterName result;
+    private final RegisterName source;
 
     public static final String OP_CODE = "out";
 
-    public OutInstruction(String label, RegisterName result) {
+    /**
+     * Constructor: a `out` instruction with a label, and a source.
+     *
+     * @param label optional label (can be null)
+     * @param source register to read and print
+     */
+    public OutInstruction(String label, RegisterName source) {
         super(label, OP_CODE);
-        this.result = result;
+        this.source = source;
     }
 
     @Override
     public int execute(Machine m) {
-        int value = m.getRegisters().get(result);
-        System.out.println(value);
+        int register_value = m.getRegisters().get(source);
+        System.out.println(register_value);
         return NORMAL_PROGRAM_COUNTER_UPDATE;
     }
 
     @Override
     public String toString() {
-        return getLabelString() + getOpcode() + " " + result;
+        return getLabelString() + getOpcode() + " " + source;
     }
 }

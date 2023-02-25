@@ -4,8 +4,6 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
-// TODO: write a JavaDoc for the class
-
 /** Represents an addition Instruction.
  * @author Unknown – provided by lecturer as example.
  */
@@ -15,6 +13,13 @@ public class AddInstruction extends Instruction {
 
 	public static final String OP_CODE = "add";
 
+	/**
+	 * Constructor: a `add` instruction with a label, a result and source.
+	 *
+	 * @param label optional label (can be null)
+	 * @param result register1
+	 * @param source register2
+	 */
 	public AddInstruction(String label, RegisterName result, RegisterName source) {
 		super(label, OP_CODE);
 		this.result = result;

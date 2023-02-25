@@ -4,30 +4,35 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
-// TODO: write a JavaDoc for the class
-
-/** Represents a mov Instruction.
+/** Represents a `mov` Instruction.
  * @author Fred Persyn
  */
 public class MovInstruction extends Instruction {
-    private final RegisterName destination;
+    private final RegisterName result;
     private final Integer value;
     public static final String OP_CODE = "mov";
 
-    public MovInstruction(String label, RegisterName destination, Integer value) {
+    /**
+     * Constructor: a `mov` instruction with a label, a result and value.
+     *
+     * @param label optional label (can be null)
+     * @param result the register to set
+     * @param value the int to store
+     */
+    public MovInstruction(String label, RegisterName result, Integer value) {
         super(label, OP_CODE);
-        this.destination = destination;
+        this.result = result;
         this.value = value;
     }
 
     @Override
     public int execute(Machine m) {
-        m.getRegisters().set(destination, value);
+        m.getRegisters().set(result, value);
         return NORMAL_PROGRAM_COUNTER_UPDATE;
     }
 
     @Override
     public String toString() {
-        return getLabelString() + getOpcode() + " " + destination + " " + value;
+        return getLabelString() + getOpcode() + " " + result + " " + value;
     }
 }

@@ -4,7 +4,7 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
-/** Represents a jnz Instruction.
+/** Represents a `jnz` Instruction.
  * @author Fred Persyn
  */
 public class JnzInstruction extends Instruction {
@@ -12,6 +12,13 @@ public class JnzInstruction extends Instruction {
     private final String targetLabel;
     public static final String OP_CODE = "jnz";
 
+    /**
+     * Constructor: a `jnz` instruction with a label, a source a targetLabel.
+     *
+     * @param label optional label (can be null)
+     * @param source register to validate
+     * @param targetLabel the target statement to execute
+     */
     public JnzInstruction(String label, RegisterName source, String targetLabel) {
         super(label, OP_CODE);
         this.source = source;

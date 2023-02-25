@@ -4,8 +4,6 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
-// TODO: write a JavaDoc for the class
-
 /** Represents a multiplication Instruction.
  * @author Fred Persyn
  */
@@ -15,6 +13,13 @@ public class MulInstruction extends Instruction {
 
     public static final String OP_CODE = "mul";
 
+    /**
+     * Constructor: a `mul` instruction with a label, a register and a source.
+     *
+     * @param label optional label (can be null)
+     * @param result register1
+     * @param source register2
+     */
     public MulInstruction(String label, RegisterName result, RegisterName source) {
         super(label, OP_CODE);
         this.result = result;
