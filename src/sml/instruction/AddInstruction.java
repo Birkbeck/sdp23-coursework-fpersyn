@@ -6,10 +6,9 @@ import sml.RegisterName;
 
 // TODO: write a JavaDoc for the class
 
-/**
- * @author
+/** Represents an addition Instruction.
+ * @author Unknown – provided by lecturer as example.
  */
-
 public class AddInstruction extends Instruction {
 	private final RegisterName result;
 	private final RegisterName source;

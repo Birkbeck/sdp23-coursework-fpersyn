@@ -5,7 +5,7 @@ package sml;
 /**
  * Represents an abstract instruction.
  *
- * @author ...
+ * @author Fred Persyn
  */
 public abstract class Instruction {
 	protected final String label;
