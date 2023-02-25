@@ -49,7 +49,7 @@ public abstract class Instruction {
 	}
 
 	// TODO: What does abstract in the declaration below mean?
-	//       (Write a short explanation.)
+	// ANSWER: abstract here declares a method without an implementation, forcing the subclass to implement it.
 	@Override
 	public abstract String toString();
 
