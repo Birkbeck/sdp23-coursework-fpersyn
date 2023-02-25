@@ -6,7 +6,7 @@ import sml.RegisterName;
 
 // TODO: write a JavaDoc for the class
 
-/** Represents a move Instruction.
+/** Represents a mov Instruction.
  * @author Fred Persyn
  */
 public class MovInstruction extends Instruction {
