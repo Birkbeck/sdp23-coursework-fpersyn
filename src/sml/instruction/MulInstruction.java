@@ -7,7 +7,7 @@ import sml.RegisterName;
 // TODO: write a JavaDoc for the class
 
 /** Represents a multiplication Instruction.
- * @author Unknown – Fred Persyn
+ * @author Fred Persyn
  */
 public class MulInstruction extends Instruction {
     private final RegisterName result;
