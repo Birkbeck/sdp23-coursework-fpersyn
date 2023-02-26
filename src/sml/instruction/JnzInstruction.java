@@ -20,8 +20,10 @@ public class JnzInstruction extends Instruction {
      * @param source register to validate
      * @param targetLabel the target statement to execute
      */
-    public JnzInstruction(String label, RegisterName source, String targetLabel) {
+    public JnzInstruction(String label, RegisterName source, String targetLabel) throws IllegalArgumentException {
         super(label, OP_CODE);
+        if (source == null) throw new IllegalArgumentException("A source is required.");
+        if (targetLabel == null) throw new IllegalArgumentException("A label is required.");
         this.source = source;
         this.targetLabel = targetLabel;
     }

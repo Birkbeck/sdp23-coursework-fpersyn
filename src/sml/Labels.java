@@ -30,12 +30,13 @@ public final class Labels {
 	 * @param label the label
 	 * @return the address the label refers to
 	 */
-	public int getAddress(String label) throws IllegalArgumentException, NoSuchElementException {
+	public int getAddress(String label) throws NoSuchElementException {
 		// TODO: Where can NullPointerException be thrown here?
 		// ANSWER: This can occur either when the label argument is null,
 		//         or when the key does not exist within the HashMap.
 		//         Both can occur in a `jnz` instruction.
-		if (label == null) throw new IllegalArgumentException("A label is required.");
+		// Nota bene: Verification of instruction input values is not the
+		//            responsibility of this class – have addressed it there.
 		if (labels.containsKey(label)) return labels.get(label);
 		throw new NoSuchElementException("The label you requested does not exist.");
 	}

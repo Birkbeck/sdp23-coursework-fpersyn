@@ -48,6 +48,17 @@ public class JnzInstructionTest {
     }
 
     @Test
+    void testThrowsExceptionWhenInvalid() {
+        // source null
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new JnzInstruction(null, null, "f1"));
+
+        // target label null
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new JnzInstruction(null, ECX, null));
+    }
+
+    @Test
     void executeValidTwo() {
         // initialise registers
         registers.set(EAX, 0);

@@ -33,12 +33,6 @@ public class LabelsTest {
     }
 
     @Test
-    void testGetAddressThrowsExceptionWhenNullRequested() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> machine.getLabels().getAddress(null));
-    }
-
-    @Test
     void testGetAddressThrowsExceptionWhenKeyNotFound() {
         Assertions.assertThrows(NoSuchElementException.class,
                 () -> machine.getLabels().getAddress("f1"));
