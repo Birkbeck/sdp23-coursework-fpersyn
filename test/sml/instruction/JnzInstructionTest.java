@@ -50,11 +50,11 @@ public class JnzInstructionTest {
     @Test
     void testThrowsExceptionWhenInvalid() {
         // source null
-        Assertions.assertThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(NullPointerException.class,
                 () -> new JnzInstruction(null, null, "f1"));
 
         // target label null
-        Assertions.assertThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(NullPointerException.class,
                 () -> new JnzInstruction(null, ECX, null));
     }
 

@@ -27,6 +27,19 @@ public class LabelsTest {
     }
 
     @Test
+    void testAddLabelThrowsExceptionWhenInvalid() {
+        // label required
+        Assertions.assertThrows(NullPointerException.class,
+                () -> machine.getLabels().addLabel(null, 1));
+
+        // label already exists
+        machine.getLabels().addLabel("f2", 0);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> machine.getLabels().addLabel("f2", 1));
+        machine.getLabels().reset();
+    }
+
+    @Test
     void testGetAddress() {
         machine.getLabels().addLabel("f1", 0);
         int address = machine.getLabels().getAddress("f1");

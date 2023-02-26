@@ -4,6 +4,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
+import java.util.Objects;
+
 /** Represents a `jnz` Instruction.
  *
  * @author Fred Persyn
@@ -20,10 +22,10 @@ public class JnzInstruction extends Instruction {
      * @param source register to validate
      * @param targetLabel the target statement to execute
      */
-    public JnzInstruction(String label, RegisterName source, String targetLabel) throws IllegalArgumentException {
+    public JnzInstruction(String label, RegisterName source, String targetLabel) throws NullPointerException {
         super(label, OP_CODE);
-        if (source == null) throw new IllegalArgumentException("A source is required.");
-        if (targetLabel == null) throw new IllegalArgumentException("A label is required.");
+        Objects.requireNonNull(source, "source required.");
+        Objects.requireNonNull(targetLabel, "targetLabel required.");
         this.source = source;
         this.targetLabel = targetLabel;
     }

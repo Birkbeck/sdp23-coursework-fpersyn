@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 // TODO: write a JavaDoc for the class
 
-/**
+/** Represents a wrapper around labels.
  *
  * @author Fred Persyn
  */
@@ -18,9 +18,9 @@ public final class Labels {
 	 * @param label the label
 	 * @param address the address the label refers to
 	 */
-	public void addLabel(String label, int address) {
-		Objects.requireNonNull(label);
-		// TODO: Add a check that there are no label duplicates.
+	public void addLabel(String label, int address) throws NullPointerException, IllegalArgumentException {
+		Objects.requireNonNull(label, "label required.");
+		if (labels.containsKey(label)) throw new IllegalArgumentException("label already exists");
 		labels.put(label, address);
 	}
 
