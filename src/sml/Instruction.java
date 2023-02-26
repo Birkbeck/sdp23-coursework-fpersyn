@@ -1,7 +1,7 @@
 package sml;
 
 /**
- * Represents an abstract instruction.
+ * Represents an abstract Instruction.
  *
  * @author Fred Persyn
  */
@@ -10,8 +10,8 @@ public abstract class Instruction {
 	protected final String opcode;
 
 	/**
-	 * Constructor: an instruction with a label and an opcode
-	 * (opcode must be an operation of the language)
+	 * Constructor: an Instruction with a label and an opcode
+	 * TODO: opcode must be an operation of the language.
 	 *
 	 * @param label optional label (can be null)
 	 * @param opcode operation name
