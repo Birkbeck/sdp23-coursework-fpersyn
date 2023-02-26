@@ -39,33 +39,47 @@ public final class Translator {
     // return "no errors were detected"
 
     /**
-     * Translates the SML program (file) into a collection of `labels`
-     * and executable instructions (`program`).
-     * @param labels – label storage
-     * @param program – instruction storage
-     * @throws IOException
+     * Translate an SML file into labels and instructions.
+     * @param labels a label repository
+     * @param program an instruction repository
      */
-    public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
-        // TODO: Mixed responsibilities => scanning, processing & storage
-        try {
-            // clear storage
-            labels.reset();
-            program.clear();
-            // Scan and process file line-by-line
-            var sc = new Scanner(new File(fileName), StandardCharsets.UTF_8);
+    public void readAndTranslate(Labels labels, List<Instruction> program) {
+        // TODO: Is resetting/clearing the reponsibility of Translator?
+        // TODO: Why not jut pass in the entire Machine context?
+        labels.reset();
+        program.clear();
+        translateFile(labels, program);
+    }
+
+    /**
+     * Process an SML file line-by-line.
+     * @param labels a label repository
+     * @param program an instruction repository
+     */
+    private void translateFile(Labels labels, List<Instruction> program) {
+        try (var sc = new Scanner(new File(fileName), StandardCharsets.UTF_8)) {
+            // process line-by-line
             while (sc.hasNextLine()) {
-                line = sc.nextLine();
-                String label = getLabel();
-                Instruction instruction = getInstruction(label);
-                if (instruction != null) {
-                    if (label != null)
-                        labels.addLabel(label, program.size());
-                    program.add(instruction);
-                }
+                line = sc.nextLine();  // TODO: Makes no sense to store this in Class – why not just pass it?
+                translateLine(labels, program);  // TODO: translateLine(line, labels, program)
             }
-        } catch (Exception e) {
-            // TODO: Populate with response.
-            ; // do nothing
+        } catch(IOException e) {
+            ; // TODO: Do something
+        }
+    }
+
+    /**
+     * Translate a SML line into a label and instruction.
+     * @param labels a label repository
+     * @param program an instruction repository
+     */
+    private void translateLine(Labels labels, List<Instruction> program) {
+        String label = getLabel();
+        Instruction instruction = getInstruction(label);
+        if (instruction != null) {
+            if (label != null)
+                labels.addLabel(label, program.size());
+            program.add(instruction);
         }
     }
 
@@ -79,6 +93,7 @@ public final class Translator {
      * with its label already removed.
      */
     private Instruction getInstruction(String label) {
+        // TODO: Mixed responsibilities => transformation & loading
         String opcode = scan();
         List<String> args = new ArrayList<>();
         try {

@@ -16,9 +16,9 @@ public class Main {
 
 		try {
 			// TODO: Build an SML file for testing purposes.
+			Machine m = new Machine(new Registers());
 			InstructionFactory factory = new InstructionFactory();
 			Translator t = new Translator(args[0], factory);
-			Machine m = new Machine(new Registers());
 			t.readAndTranslate(m.getLabels(), m.getProgram());
 
 			System.out.println("Here is the program; it has " + m.getProgram().size() + " instructions.");

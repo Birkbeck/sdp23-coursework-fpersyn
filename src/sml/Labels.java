@@ -3,7 +3,7 @@ package sml;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/** Represents a wrapper around labels.
+/** Represents a labels repository.
  *
  * @author Fred Persyn
  */
