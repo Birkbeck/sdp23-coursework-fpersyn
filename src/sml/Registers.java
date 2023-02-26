@@ -2,10 +2,10 @@ package sml;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-// TODO: write a JavaDoc for the class
+import java.util.stream.Stream;
 
 /**
+ * Represents a wrapper around registers.
  *
  * @author Fred Persyn
  */
@@ -16,13 +16,18 @@ public final class Registers {
         EAX, EBX, ECX, EDX, ESP, EBP, ESI, EDI;
     }
 
+    /**
+     * Constructor
+     */
     public Registers() {
         clear(); // the class is final
     }
 
+    /**
+     * Clears the register values.
+     */
     public void clear() {
-        for (Register register : Register.values())
-            registers.put(register, 0);
+        Stream.of(Register.values()).forEach(key -> registers.put(key, 0));
     }
 
     /**
@@ -45,19 +50,33 @@ public final class Registers {
         return registers.get((Register)register);
     }
 
+    /**
+     * Determine if the Registers equal another.
+     *
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Registers other) {
-            return registers.equals(other.registers);
-        }
+        if (o instanceof Registers other) return registers.equals(other.registers);
         return false;
     }
 
+    /**
+     * Compute a hash code for the registers.
+     *
+     * @return hash code
+     */
     @Override
     public int hashCode() {
         return registers.hashCode();
     }
 
+    /**
+     * Represent the registers as a string
+     * in the form "[key = value, , ..., key -> value]"
+     *
+     * @return the string representation of the labels map
+     */
     @Override
     public String toString() {
         return registers.entrySet().stream()

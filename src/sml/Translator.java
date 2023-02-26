@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static sml.Registers.Register;
 
@@ -130,15 +132,11 @@ public final class Translator {
      * If there is no word, return "".
      */
     private String scan() {
-        line = line.trim();
-
-        for (int i = 0; i < line.length(); i++)
-            if (Character.isWhitespace(line.charAt(i))) {
-                String word = line.substring(0, i);
-                line = line.substring(i);
-                return word;
-            }
-
-        return line;
+        Optional<String> word = Stream.of(line.trim().split("\\s+")).findFirst();
+        if (word.isPresent()) {
+            line = line.substring(word.get().length() + 1);
+            return word.get();
+        }
+        return "";
     }
 }
