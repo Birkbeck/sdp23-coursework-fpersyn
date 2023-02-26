@@ -34,6 +34,7 @@ public class SubInstructionTest {
         registers.set(EBX, 6);
         Instruction instruction = new SubInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(-1, machine.getRegisters().get(EAX));
     }
 
@@ -43,6 +44,7 @@ public class SubInstructionTest {
         registers.set(EBX, 6);
         Instruction instruction = new SubInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(-11, machine.getRegisters().get(EAX));
     }
 
@@ -52,6 +54,7 @@ public class SubInstructionTest {
         registers.set(EBX, -6);
         Instruction instruction = new SubInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(1, machine.getRegisters().get(EAX));
     }
 
@@ -60,6 +63,7 @@ public class SubInstructionTest {
         registers.set(EAX, 5);
         registers.set(EBX, 6);
         Instruction instruction = new SubInstruction("f1", EAX, EBX);
+
         Assertions.assertEquals("f1: sub EAX EBX", instruction.toString());
     }
 
@@ -69,6 +73,27 @@ public class SubInstructionTest {
         registers.set(EBX, 6);
         Instruction instruction1 = new SubInstruction("f1", EAX, EBX);
         Instruction instruction2 = new SubInstruction("f1", EAX, EBX);
-        Assertions.assertEquals(instruction1, instruction2);
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsTwo() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        registers.set(ECX, 10);
+        Instruction instruction1 = new SubInstruction("f1", EAX, EBX);
+        Instruction instruction2 = new SubInstruction("f1", EAX, ECX);
+
+        Assertions.assertFalse(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsThree() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        Instruction instruction1 = new SubInstruction("f1", EAX, EBX);
+
+        Assertions.assertFalse(instruction1.equals(instruction1.toString()));
     }
 }

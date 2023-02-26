@@ -44,6 +44,7 @@ public class JnzInstructionTest {
         // execute
         instruction1.execute(machine);
         instruction2.execute(machine);
+
         Assertions.assertEquals(NORMAL_PROGRAM_COUNTER_UPDATE, instruction3.execute(machine));
     }
 
@@ -75,6 +76,7 @@ public class JnzInstructionTest {
         instruction1.execute(machine);
         instruction2.execute(machine);
         instruction3.execute(machine);
+
         Assertions.assertEquals(0, instruction4.execute(machine));
     }
 
@@ -82,6 +84,7 @@ public class JnzInstructionTest {
     void testToString() {
         registers.set(EAX, 5);
         Instruction instruction = new JnzInstruction("f2", EAX, "f1");
+
         Assertions.assertEquals("f2: jnz EAX f1", instruction.toString());
     }
 
@@ -90,6 +93,25 @@ public class JnzInstructionTest {
         registers.set(EAX, 5);
         Instruction instruction1 = new JnzInstruction("f2", EAX, "f1");
         Instruction instruction2 = new JnzInstruction("f2", EAX, "f1");
-        Assertions.assertEquals(instruction1, instruction2);
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsTwo() {
+        registers.set(EAX, 5);
+        Instruction instruction1 = new JnzInstruction("f2", EAX, "f1");
+        Instruction instruction2 = new JnzInstruction("f3", EAX, "f1");
+
+        Assertions.assertFalse(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsThree() {
+        // A JnzInstruction instance should not equal its string representation
+        registers.set(EAX, 5);
+        Instruction instruction1 = new JnzInstruction("f2", EAX, "f1");
+
+        Assertions.assertFalse(instruction1.equals(instruction1.toString()));
     }
 }

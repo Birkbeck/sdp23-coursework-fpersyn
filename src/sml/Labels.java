@@ -62,7 +62,10 @@ public final class Labels {
 	 * @return boolean
 	 */
 	@Override
-	public boolean equals(Object o) { return this.hashCode() == o.hashCode(); }
+	public boolean equals(Object o) {
+		if (o instanceof Labels other) return this.hashCode() == other.hashCode();
+		return false;
+	}
 
 	/**
 	 * Compute a hash code for labels.

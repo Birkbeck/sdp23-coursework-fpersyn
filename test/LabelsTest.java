@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import sml.Instruction;
+import sml.Labels;
 import sml.Machine;
 import sml.Registers;
 import sml.instruction.AddInstruction;
@@ -65,13 +66,39 @@ public class LabelsTest {
 
     @Test
     void testEquals() {
-        machine.getLabels().addLabel("f1", 0);
-        machine.getLabels().addLabel("f2", 1);
+        Labels labels1 = new Labels();
+        labels1.addLabel("f1", 0);
+        labels1.addLabel("f2", 1);
 
-        Machine machine2 = new Machine(new Registers());
-        machine2.getLabels().addLabel("f1", 0);
-        machine2.getLabels().addLabel("f2", 1);
+        Labels labels2 = new Labels();
+        labels2.addLabel("f1", 0);
+        labels2.addLabel("f2", 1);
 
-        Assertions.assertEquals(machine.getLabels(), machine2.getLabels());
+        Assertions.assertTrue(labels1.equals(labels2));
+    }
+
+    @Test
+    void testEqualsTwo() {
+        Labels labels1 = new Labels();
+        labels1.addLabel("f1", 0);
+        labels1.addLabel("f2", 1);
+
+        Labels labels2 = new Labels();
+        labels2.addLabel("f1", 1);
+        labels2.addLabel("f2", 2);
+
+        Assertions.assertFalse(labels1.equals(labels2));
+    }
+
+    @Test
+    void testEqualsThree() {
+        // A Labels instance should not equal its string representation
+        Labels labels1 = new Labels();
+        labels1.addLabel("f1", 0);
+        labels1.addLabel("f2", 1);
+
+        String labels2 = new String(labels1.toString());
+
+        Assertions.assertFalse(labels1.equals(labels2));
     }
 }

@@ -39,6 +39,7 @@ public class OutInstructionTest {
         registers.set(EAX, 6);
         Instruction instruction = new OutInstruction(null, EAX);
         instruction.execute(machine);
+
         Assertions.assertEquals("6\n", output.toString());
     }
 
@@ -46,6 +47,7 @@ public class OutInstructionTest {
     void testToString() {
         registers.set(EAX, 5);
         Instruction instruction = new OutInstruction("f1", EAX);
+
         Assertions.assertEquals("f1: out EAX", instruction.toString());
     }
 
@@ -54,6 +56,26 @@ public class OutInstructionTest {
         registers.set(EAX, 5);
         Instruction instruction1 = new OutInstruction("f1", EAX);
         Instruction instruction2 = new OutInstruction("f1", EAX);
-        Assertions.assertEquals(instruction1, instruction2);
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsTwo() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 10);
+        Instruction instruction1 = new OutInstruction("f1", EAX);
+        Instruction instruction2 = new OutInstruction("f1", EBX);
+
+        Assertions.assertFalse(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsThree() {
+        // A OutInstruction instance should not equal its string representation
+        registers.set(EAX, 5);
+        Instruction instruction1 = new OutInstruction("f1", EAX);
+
+        Assertions.assertFalse(instruction1.equals(instruction1.toString()));
     }
 }

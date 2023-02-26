@@ -33,6 +33,7 @@ public class MovInstructionTest {
         registers.set(EAX, 0);
         Instruction instruction = new MovInstruction(null, EAX, 5);
         instruction.execute(machine);
+
         Assertions.assertEquals(5, machine.getRegisters().get(EAX));
     }
 
@@ -40,6 +41,7 @@ public class MovInstructionTest {
     void testToString() {
         registers.set(EAX, 0);
         Instruction instruction = new MovInstruction("f1", EAX, 5);
+
         Assertions.assertEquals("f1: mov EAX 5", instruction.toString());
     }
 
@@ -48,6 +50,25 @@ public class MovInstructionTest {
         registers.set(EAX, 0);
         Instruction instruction1 = new MovInstruction("f1", EAX, 5);
         Instruction instruction2 = new MovInstruction("f1", EAX, 5);
-        Assertions.assertEquals(instruction1, instruction2);
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsTwo() {
+        registers.set(EAX, 0);
+        Instruction instruction1 = new MovInstruction("f1", EAX, 5);
+        Instruction instruction2 = new MovInstruction("f1", EAX, 10);
+
+        Assertions.assertFalse(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsThree() {
+        // A MovInstruction instance should not equal its string representation
+        registers.set(EAX, 0);
+        Instruction instruction1 = new MovInstruction("f1", EAX, 5);
+
+        Assertions.assertFalse(instruction1.equals(instruction1.toString()));
     }
 }

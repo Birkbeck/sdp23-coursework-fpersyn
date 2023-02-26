@@ -34,6 +34,7 @@ public class MulInstructionTest {
         registers.set(EBX, 6);
         Instruction instruction = new MulInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(30, machine.getRegisters().get(EAX));
     }
 
@@ -43,6 +44,7 @@ public class MulInstructionTest {
         registers.set(EBX, 6);
         Instruction instruction = new MulInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(-30, machine.getRegisters().get(EAX));
     }
 
@@ -51,6 +53,7 @@ public class MulInstructionTest {
         registers.set(EAX, 5);
         registers.set(EBX, 6);
         Instruction instruction = new MulInstruction("f1", EAX, EBX);
+
         Assertions.assertEquals("f1: mul EAX EBX", instruction.toString());
     }
 
@@ -60,6 +63,28 @@ public class MulInstructionTest {
         registers.set(EBX, 6);
         Instruction instruction1 = new MulInstruction("f1", EAX, EBX);
         Instruction instruction2 = new MulInstruction("f1", EAX, EBX);
-        Assertions.assertEquals(instruction1, instruction2);
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsTwo() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        registers.set(ECX, 10);
+        Instruction instruction1 = new MulInstruction("f1", EAX, EBX);
+        Instruction instruction2 = new MulInstruction("f1", EAX, ECX);
+
+        Assertions.assertFalse(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsThree() {
+        // A MulInstruction instance should not equal its string representation
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        Instruction instruction1 = new MulInstruction("f1", EAX, EBX);
+
+        Assertions.assertFalse(instruction1.equals(instruction1.toString()));
     }
 }

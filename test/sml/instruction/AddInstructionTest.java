@@ -34,6 +34,7 @@ class AddInstructionTest {
     registers.set(EBX, 6);
     Instruction instruction = new AddInstruction(null, EAX, EBX);
     instruction.execute(machine);
+
     Assertions.assertEquals(11, machine.getRegisters().get(EAX));
   }
 
@@ -43,6 +44,7 @@ class AddInstructionTest {
     registers.set(EBX, 6);
     Instruction instruction = new AddInstruction(null, EAX, EBX);
     instruction.execute(machine);
+
     Assertions.assertEquals(1, machine.getRegisters().get(EAX));
   }
 
@@ -51,6 +53,7 @@ class AddInstructionTest {
     registers.set(EAX, 5);
     registers.set(EBX, 6);
     Instruction instruction = new AddInstruction("f1", EAX, EBX);
+
     Assertions.assertEquals("f1: add EAX EBX", instruction.toString());
   }
 
@@ -60,6 +63,27 @@ class AddInstructionTest {
     registers.set(EBX, 6);
     Instruction instruction1 = new AddInstruction("f1", EAX, EBX);
     Instruction instruction2 = new AddInstruction("f1", EAX, EBX);
-    Assertions.assertEquals(instruction1, instruction2);
+
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void testEqualsTwo() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new AddInstruction("f1", EAX, EBX);
+    Instruction instruction2 = new AddInstruction("f2", EAX, EBX);
+
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void testEqualsThree() {
+    // An AddInstruction instance should not equal its string representation
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new AddInstruction("f1", EAX, EBX);
+
+    Assertions.assertFalse(instruction1.equals(instruction1.toString()));
   }
 }

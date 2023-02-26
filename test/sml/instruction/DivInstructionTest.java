@@ -34,6 +34,7 @@ public class DivInstructionTest {
         registers.set(EBX, 3);
         Instruction instruction = new DivInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(2, machine.getRegisters().get(EAX));
     }
 
@@ -44,6 +45,7 @@ public class DivInstructionTest {
         registers.set(EBX, 3);
         Instruction instruction = new DivInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(-2, machine.getRegisters().get(EAX));
     }
 
@@ -54,6 +56,7 @@ public class DivInstructionTest {
         registers.set(EBX, -3);
         Instruction instruction = new DivInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(-2, machine.getRegisters().get(EAX));
     }
 
@@ -64,6 +67,7 @@ public class DivInstructionTest {
         registers.set(EBX, 2);
         Instruction instruction = new DivInstruction(null, EAX, EBX);
         instruction.execute(machine);
+
         Assertions.assertEquals(2, machine.getRegisters().get(EAX));
     }
 
@@ -75,6 +79,7 @@ public class DivInstructionTest {
         Instruction instruction = new DivInstruction(null, EAX, EBX);
         Exception exception = Assertions.assertThrows(ArithmeticException.class, () ->
                 instruction.execute(machine));
+
         Assertions.assertEquals("/ by zero", exception.getMessage());
     }
 
@@ -83,6 +88,7 @@ public class DivInstructionTest {
         registers.set(EAX, 5);
         registers.set(EBX, 6);
         Instruction instruction = new DivInstruction("f1", EAX, EBX);
+
         Assertions.assertEquals("f1: div EAX EBX", instruction.toString());
     }
 
@@ -92,6 +98,27 @@ public class DivInstructionTest {
         registers.set(EBX, 6);
         Instruction instruction1 = new DivInstruction("f1", EAX, EBX);
         Instruction instruction2 = new DivInstruction("f1", EAX, EBX);
-        Assertions.assertEquals(instruction1, instruction2);
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsTwp() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        Instruction instruction1 = new DivInstruction("f1", EAX, EBX);
+        Instruction instruction2 = new DivInstruction("f2", EAX, EBX);
+
+        Assertions.assertFalse(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testEqualsThree() {
+        // A DivInstruction instance should not equal its string representation
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        Instruction instruction1 = new DivInstruction("f1", EAX, EBX);
+
+        Assertions.assertFalse(instruction1.equals(instruction1.toString()));
     }
 }
