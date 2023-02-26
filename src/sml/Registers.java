@@ -66,6 +66,6 @@ public final class Registers {
         return registers.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .map(e -> e.getKey() + " = " + e.getValue())
-                .collect(Collectors.joining(", ", "[", "]")) ;
+                .collect(Collectors.joining(", ", "[", "]"));
     }
 }
