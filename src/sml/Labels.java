@@ -3,8 +3,6 @@ package sml;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// TODO: write a JavaDoc for the class
-
 /** Represents a wrapper around labels.
  *
  * @author Fred Persyn
