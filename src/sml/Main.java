@@ -15,7 +15,9 @@ public class Main {
 		}
 
 		try {
-			Translator t = new Translator(args[0]);
+			// TODO: Build an SML file for testing purposes.
+			InstructionFactory factory = new InstructionFactory();
+			Translator t = new Translator(args[0], factory);
 			Machine m = new Machine(new Registers());
 			t.readAndTranslate(m.getLabels(), m.getProgram());
 
