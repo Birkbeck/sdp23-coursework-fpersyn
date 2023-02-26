@@ -12,10 +12,11 @@ import java.util.stream.Stream;
 
 import static sml.Registers.Register;
 
+// TODO –update docstring
 /**
  * This class ....
  * <p>
- * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
+ * The translator of a <b>S</b><b>M</b><b>L</b> program.
  *
  * @author Fred Persyn
  */
@@ -67,6 +68,11 @@ public final class Translator {
         if (line.isEmpty())
             return null;
 
+        // TODO – remove explicit calls (switch statement) with reflection API
+        // * You can call scan() 3 times to get the required args: op, arg1, arg2
+        // * `op` mappings can be maintained in a factory class
+        // TODO: Next, use dependency injection to allow this machine class
+        //       to work with different sets of opcodes (different CPUs)
         String opcode = scan();
         switch (opcode) {
             case AddInstruction.OP_CODE -> {
@@ -103,12 +109,6 @@ public final class Translator {
                 String L = scan();
                 return new JnzInstruction(label, Register.valueOf(s), L);
             }
-
-            // TODO: Then, replace the switch by using the Reflection API
-
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
-
             default -> {
                 System.out.println("Unknown instruction: " + opcode);
             }
