@@ -45,4 +45,21 @@ public class MulInstructionTest {
         instruction.execute(machine);
         Assertions.assertEquals(-30, machine.getRegisters().get(EAX));
     }
+
+    @Test
+    void testToString() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        Instruction instruction = new MulInstruction("f1", EAX, EBX);
+        Assertions.assertEquals("f1: mul EAX EBX", instruction.toString());
+    }
+
+    @Test
+    void testEquals() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        Instruction instruction1 = new MulInstruction("f1", EAX, EBX);
+        Instruction instruction2 = new MulInstruction("f1", EAX, EBX);
+        Assertions.assertEquals(instruction1, instruction2);
+    }
 }

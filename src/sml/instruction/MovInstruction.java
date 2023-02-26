@@ -5,6 +5,7 @@ import sml.Machine;
 import sml.RegisterName;
 
 /** Represents a `mov` Instruction.
+ *
  * @author Fred Persyn
  */
 public class MovInstruction extends Instruction {

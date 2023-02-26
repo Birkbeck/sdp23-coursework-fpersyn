@@ -21,10 +21,20 @@ public abstract class Instruction {
 		this.opcode = opcode;
 	}
 
+	/**
+	 * Get the label of the instruction.
+	 *
+	 * @return label
+	 */
 	public String getLabel() {
 		return label;
 	}
 
+	/**
+	 * Get the opcode of the instruction.
+	 *
+	 * @return opcode
+	 */
 	public String getOpcode() {
 		return opcode;
 	}
@@ -41,14 +51,47 @@ public abstract class Instruction {
 	 */
 	public abstract int execute(Machine machine);
 
+	/**
+	 * Get the label string for the instruction.
+	 *
+	 * @return label string
+	 */
 	protected String getLabelString() {
 		return (getLabel() == null) ? "" : getLabel() + ": ";
 	}
 
 	// TODO: What does abstract in the declaration below mean?
 	// ANSWER: abstract here declares a method without an implementation, forcing the subclass to implement it.
+	//         `@override` indicates default implementations inherited from `class` are overridden.
+
+	/**
+	 * Format the instruction to a String.
+	 *
+	 * @return instruction as String
+	 */
 	@Override
 	public abstract String toString();
 
 	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
+	// ANSWER: I chose to implement both equals() and hashCode() here using the toString() methods
+	//         which are implemented by the subclasses. It is more elegant and avoids repetition.
+	/**
+	 * Determine if the instruction equals another.
+	 *
+	 * @return boolean
+	 */
+	@Override
+	public boolean equals(Object o) {
+		return this.hashCode() == o.hashCode();
+	};
+
+	/**
+	 * Compute a hash code for the instruction.
+	 *
+	 * @return hash code
+	 */
+	@Override
+	public int hashCode() {
+		return this.toString().hashCode();
+	}
 }

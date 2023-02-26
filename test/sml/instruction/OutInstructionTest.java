@@ -41,4 +41,19 @@ public class OutInstructionTest {
         instruction.execute(machine);
         Assertions.assertEquals("6\n", output.toString());
     }
+
+    @Test
+    void testToString() {
+        registers.set(EAX, 5);
+        Instruction instruction = new OutInstruction("f1", EAX);
+        Assertions.assertEquals("f1: out EAX", instruction.toString());
+    }
+
+    @Test
+    void testEquals() {
+        registers.set(EAX, 5);
+        Instruction instruction1 = new OutInstruction("f1", EAX);
+        Instruction instruction2 = new OutInstruction("f1", EAX);
+        Assertions.assertEquals(instruction1, instruction2);
+    }
 }

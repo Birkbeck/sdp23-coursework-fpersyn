@@ -77,4 +77,21 @@ public class DivInstructionTest {
                 instruction.execute(machine));
         Assertions.assertEquals("/ by zero", exception.getMessage());
     }
+
+    @Test
+    void testToString() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        Instruction instruction = new DivInstruction("f1", EAX, EBX);
+        Assertions.assertEquals("f1: div EAX EBX", instruction.toString());
+    }
+
+    @Test
+    void testEquals() {
+        registers.set(EAX, 5);
+        registers.set(EBX, 6);
+        Instruction instruction1 = new DivInstruction("f1", EAX, EBX);
+        Instruction instruction2 = new DivInstruction("f1", EAX, EBX);
+        Assertions.assertEquals(instruction1, instruction2);
+    }
 }

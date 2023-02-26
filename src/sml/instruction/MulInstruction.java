@@ -5,6 +5,7 @@ import sml.Machine;
 import sml.RegisterName;
 
 /** Represents a multiplication Instruction.
+ *
  * @author Fred Persyn
  */
 public class MulInstruction extends Instruction {

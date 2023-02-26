@@ -5,6 +5,7 @@ import sml.Machine;
 import sml.RegisterName;
 
 /** Represents a division Instruction.
+ *
  * @author Fred Persyn
  */
 public class DivInstruction extends Instruction {

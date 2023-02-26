@@ -5,6 +5,7 @@ import sml.Machine;
 import sml.RegisterName;
 
 /** Represents an addition Instruction.
+ *
  * @author Unknown – provided by lecturer as example.
  */
 public class AddInstruction extends Instruction {

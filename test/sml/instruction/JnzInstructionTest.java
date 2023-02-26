@@ -66,4 +66,19 @@ public class JnzInstructionTest {
         instruction3.execute(machine);
         Assertions.assertEquals(0, instruction4.execute(machine));
     }
+
+    @Test
+    void testToString() {
+        registers.set(EAX, 5);
+        Instruction instruction = new JnzInstruction("f2", EAX, "f1");
+        Assertions.assertEquals("f2: jnz EAX f1", instruction.toString());
+    }
+
+    @Test
+    void testEquals() {
+        registers.set(EAX, 5);
+        Instruction instruction1 = new JnzInstruction("f2", EAX, "f1");
+        Instruction instruction2 = new JnzInstruction("f2", EAX, "f1");
+        Assertions.assertEquals(instruction1, instruction2);
+    }
 }

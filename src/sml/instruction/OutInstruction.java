@@ -5,6 +5,7 @@ import sml.Machine;
 import sml.RegisterName;
 
 /** Represents a `out` Instruction.
+ *
  * @author Fred Persyn
  */
 public class OutInstruction extends Instruction {
@@ -25,8 +26,8 @@ public class OutInstruction extends Instruction {
 
     @Override
     public int execute(Machine m) {
-        int register_value = m.getRegisters().get(source);
-        System.out.println(register_value);
+        int source_value = m.getRegisters().get(source);
+        System.out.println(source_value);
         return NORMAL_PROGRAM_COUNTER_UPDATE;
     }
 

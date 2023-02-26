@@ -5,6 +5,7 @@ import sml.Machine;
 import sml.RegisterName;
 
 /** Represents a `jnz` Instruction.
+ *
  * @author Fred Persyn
  */
 public class JnzInstruction extends Instruction {
