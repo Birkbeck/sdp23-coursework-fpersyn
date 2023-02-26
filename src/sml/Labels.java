@@ -56,6 +56,25 @@ public final class Labels {
 	}
 
 	// TODO: Implement equals and hashCode (needed in class Machine).
+	// ANSWER: I'm Using same reasoning here as with the Instuction class,
+	// 		   relying on toString() for simplicity.
+	/**
+	 * Determine if the Labels instance equals another.
+	 *
+	 * @return boolean
+	 */
+	@Override
+	public boolean equals(Object o) { return this.hashCode() == o.hashCode(); }
+
+	/**
+	 * Compute a hash code for labels.
+	 *
+	 * @return hash code
+	 */
+	@Override
+	public int hashCode() {
+		return this.toString().hashCode();
+	}
 
 	/**
 	 * Removes the labels

@@ -15,7 +15,7 @@ import static sml.Registers.Register;
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  *
- * @author ...
+ * @author Fred Persyn
  */
 public final class Translator {
 

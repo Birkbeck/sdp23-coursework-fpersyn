@@ -3,8 +3,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
+import sml.instruction.AddInstruction;
 
 import java.util.NoSuchElementException;
 
@@ -48,4 +50,15 @@ public class LabelsTest {
         machine.getLabels().reset();
     }
 
+    @Test
+    void testEquals() {
+        machine.getLabels().addLabel("f1", 0);
+        machine.getLabels().addLabel("f2", 1);
+
+        Machine machine2 = new Machine(new Registers());
+        machine2.getLabels().addLabel("f1", 0);
+        machine2.getLabels().addLabel("f2", 1);
+
+        Assertions.assertEquals(machine.getLabels(), machine2.getLabels());
+    }
 }

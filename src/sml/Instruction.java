@@ -81,9 +81,7 @@ public abstract class Instruction {
 	 * @return boolean
 	 */
 	@Override
-	public boolean equals(Object o) {
-		return this.hashCode() == o.hashCode();
-	};
+	public boolean equals(Object o) { return this.hashCode() == o.hashCode(); }
 
 	/**
 	 * Compute a hash code for the instruction.
