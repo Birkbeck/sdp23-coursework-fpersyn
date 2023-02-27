@@ -1,9 +1,10 @@
 package sml;
 
+import sml.instruction.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -43,28 +44,17 @@ public final class Translator {
      * @param labels a label repository
      * @param program an instruction repository
      */
-    public void readAndTranslate(Labels labels, List<Instruction> program) {
-        // TODO: Is resetting/clearing the reponsibility of Translator?
+    public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
+        // TODO: Is resetting/clearing the responsibility of Translator?
         // TODO: Why not jut pass in the entire Machine context?
         labels.reset();
         program.clear();
-        translateFile(labels, program);
-    }
-
-    /**
-     * Process an SML file line-by-line.
-     * @param labels a label repository
-     * @param program an instruction repository
-     */
-    private void translateFile(Labels labels, List<Instruction> program) {
+        // parse file line-by-line
         try (var sc = new Scanner(new File(fileName), StandardCharsets.UTF_8)) {
-            // process line-by-line
             while (sc.hasNextLine()) {
-                line = sc.nextLine();  // TODO: Makes no sense to store this in Class – why not just pass it?
-                translateLine(labels, program);  // TODO: translateLine(line, labels, program)
+                line = sc.nextLine();
+                translateLine(labels, program);
             }
-        } catch(IOException e) {
-            ; // TODO: Do something
         }
     }
 
@@ -93,13 +83,21 @@ public final class Translator {
      * with its label already removed.
      */
     private Instruction getInstruction(String label) {
-        // TODO: Mixed responsibilities => transformation & loading
+        if (line.isEmpty())
+            return null;
+
+        // TODO – remove explicit calls (switch statement) with reflection API
+        // * You can call scan() 3 times to get the required args: op, arg1, arg2
+        // * `op` mappings can be maintained in a factory class
+        // TODO: Next, use dependency injection to allow this machine class
+        //       to work with different sets of opcodes (different CPUs)
         String opcode = scan();
         List<String> args = new ArrayList<>();
         try {
             if (opcode.isEmpty()) return null;
             while (line.length() > 0) args.add(scan());
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Unknown instruction: " + opcode);
         }
         return factory.createInstruction(label, opcode, args);
