@@ -5,10 +5,7 @@ import sml.instruction.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.stream.Stream;
+import java.util.*;
 
 // TODO –update docstring
 /**
@@ -83,24 +80,53 @@ public final class Translator {
      * with its label already removed.
      */
     private Instruction getInstruction(String label) {
-        if (line.isEmpty())
-            return null;
-
+        if (line.isEmpty()) return null;
         // TODO – remove explicit calls (switch statement) with reflection API
         // * You can call scan() 3 times to get the required args: op, arg1, arg2
         // * `op` mappings can be maintained in a factory class
         // TODO: Next, use dependency injection to allow this machine class
         //       to work with different sets of opcodes (different CPUs)
         String opcode = scan();
-        List<String> args = new ArrayList<>();
-        try {
-            if (opcode.isEmpty()) return null;
-            while (line.length() > 0) args.add(scan());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Unknown instruction: " + opcode);
+        switch (opcode) {
+            case AddInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new AddInstruction(label, Registers.Register.valueOf(r), Registers.Register.valueOf(s));
+            }
+            case SubInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new SubInstruction(label, Registers.Register.valueOf(r), Registers.Register.valueOf(s));
+            }
+            case MulInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new MulInstruction(label, Registers.Register.valueOf(r), Registers.Register.valueOf(s));
+            }
+            case DivInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new DivInstruction(label, Registers.Register.valueOf(r), Registers.Register.valueOf(s));
+            }
+            case OutInstruction.OP_CODE -> {
+                String s = scan();
+                return new OutInstruction(label, Registers.Register.valueOf(s));
+            }
+            case MovInstruction.OP_CODE -> {
+                String r = scan();
+                String x = scan();
+                return new MovInstruction(label, Registers.Register.valueOf(r), Integer.valueOf(x));
+            }
+            case JnzInstruction.OP_CODE -> {
+                String s = scan();
+                String L = scan();
+                return new JnzInstruction(label, Registers.Register.valueOf(s), L);
+            }
+            default -> {
+                System.out.println("Unknown instruction: " + opcode);
+            }
         }
-        return factory.createInstruction(label, opcode, args);
+        return null;
     }
 
     /**
@@ -121,11 +147,13 @@ public final class Translator {
      * If there is no word, return "".
      */
     private String scan() {
-        Optional<String> word = Stream.of(line.trim().split("\\s+")).findFirst();
-        if (word.isPresent()) {
-            line = line.substring(word.get().length() + 1);
-            return word.get();
-        }
-        return "";
+        line = line.trim();
+        for (int i = 0; i < line.length(); i++)
+            if (Character.isWhitespace(line.charAt(i))) {
+                String word = line.substring(0, i);
+                line = line.substring(i);
+                return word;
+            }
+        return line;
     }
 }
