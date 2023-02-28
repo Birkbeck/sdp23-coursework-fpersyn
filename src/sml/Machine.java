@@ -1,5 +1,8 @@
 package sml;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,21 +16,20 @@ import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
  * An instance contains 32 registers and methods to access and change them.
  *
  */
+@Component("machine")
 public final class Machine {
 
-	private final Labels labels = new Labels();
+	@Autowired
+	private final Labels labels = null;
 
 	private final List<Instruction> program = new ArrayList<>();
 
-	private final Registers registers;
+	@Autowired
+	private final Registers registers = null;
 
 	// The program counter; it contains the index (in program)
 	// of the next instruction to be executed.
 	private int programCounter = 0;
-
-	public Machine(Registers registers) {
-		this.registers = registers;
-	}
 
 	/**
 	 * Execute the program in program, beginning at instruction 0.

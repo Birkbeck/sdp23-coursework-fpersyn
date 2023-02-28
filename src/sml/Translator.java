@@ -1,5 +1,9 @@
 package sml;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,26 +19,16 @@ import java.util.stream.Stream;
  *
  * @author Fred Persyn
  */
+@Component("translator")
 public final class Translator {
+    @Value("${fileName}")
+    private final String fileName = null; // source file of SML code
 
-    private final String fileName; // source file of SML code
-
-    private final InstructionFactory factory;
+    @Autowired
+    private final InstructionFactory factory = null;
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
-
-    /**
-     * Constructor
-     */
-    public Translator(String fileName, InstructionFactory factory) {
-        this.fileName =  fileName;
-        this.factory = factory;
-    }
-
-    // translate the small program in the file into lab (the labels) and
-    // prog (the program)
-    // return "no errors were detected"
 
     /**
      * Translate an SML file into labels and instructions.

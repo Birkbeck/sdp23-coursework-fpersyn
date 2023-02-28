@@ -1,5 +1,7 @@
 package sml;
 
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -9,6 +11,7 @@ import java.util.stream.Stream;
  *
  * @author Fred Persyn
  */
+@Component("registers")
 public final class Registers {
     private final Map<Register, Integer> registers = new HashMap<>();
 

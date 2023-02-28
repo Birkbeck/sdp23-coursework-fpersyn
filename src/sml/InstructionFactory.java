@@ -1,6 +1,7 @@
 package sml;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import sml.instruction.*;
 import static sml.Registers.Register;
 
@@ -8,6 +9,7 @@ import static sml.Registers.Register;
 /**
  *
  */
+@Component("instructionFactory")
 public class InstructionFactory {
     public Instruction createInstruction(String label, String opcode, List<String> args) {
         // TODO – remove explicit calls (switch statement) with reflection API

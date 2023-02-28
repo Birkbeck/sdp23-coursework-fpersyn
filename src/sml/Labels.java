@@ -1,5 +1,7 @@
 package sml;
 
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -7,6 +9,7 @@ import java.util.stream.Collectors;
  *
  * @author Fred Persyn
  */
+@Component("labels")
 public final class Labels {
 	private final Map<String, Integer> labels = new HashMap<>();
 

@@ -1,5 +1,7 @@
 package sml;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.io.IOException;
 
 public class Main {
@@ -15,10 +17,10 @@ public class Main {
 		}
 
 		try {
-			// TODO: Build an SML file for testing purposes.
-			Machine m = new Machine(new Registers());
-			InstructionFactory factory = new InstructionFactory();
-			Translator t = new Translator(args[0], factory);
+			System.setProperty("fileName", args[0]);
+			var factory = new ClassPathXmlApplicationContext("beans.xml");
+			Machine m = (Machine) factory.getBean("machine");
+			Translator t = (Translator) factory.getBean("translator");
 			t.readAndTranslate(m.getLabels(), m.getProgram());
 
 			System.out.println("Here is the program; it has " + m.getProgram().size() + " instructions.");
