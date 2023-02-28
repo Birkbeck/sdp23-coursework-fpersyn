@@ -1,11 +1,11 @@
 package sml;
 
-import sml.instruction.*;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Stream;
 
 // TODO –update docstring
 /**
@@ -42,16 +42,17 @@ public final class Translator {
      * @param program an instruction repository
      */
     public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
-        // TODO: Is resetting/clearing the responsibility of Translator?
-        // TODO: Why not jut pass in the entire Machine context?
+        // TODO: 2 responsibilities here?
+        // clear repositories
         labels.reset();
         program.clear();
-        // parse file line-by-line
-        try (var sc = new Scanner(new File(fileName), StandardCharsets.UTF_8)) {
-            while (sc.hasNextLine()) {
-                line = sc.nextLine();
-                translateLine(labels, program);
-            }
+        // parse file
+        try(Stream<String> stream = Files.lines(Path.of(fileName), StandardCharsets.UTF_8)) {
+            stream.map(String::trim)
+                  .forEach(s -> {
+                      line = s;  // TODO: scan() operates like a stream... why use memory?
+                      translateLine(labels, program);  // TODO: Really necessary to pass these?
+                  });
         }
     }
 
@@ -61,7 +62,9 @@ public final class Translator {
      * @param program an instruction repository
      */
     private void translateLine(Labels labels, List<Instruction> program) {
+        // translate label
         String label = getLabel();
+        // translate instruction
         Instruction instruction = getInstruction(label);
         if (instruction != null) {
             if (label != null)
@@ -118,7 +121,8 @@ public final class Translator {
      * If there is no word, return "".
      */
     private String scan() {
-        line = line.trim();
+        // TODO: This methods acts like a stream... Why does it need memory?
+        //       Why not just use a stream – instead of a method?
         Optional<String> word = Arrays.stream(line.split(" "))
                 .filter(s -> s.length() >= 1).findFirst();
         if (word.isPresent()) {
