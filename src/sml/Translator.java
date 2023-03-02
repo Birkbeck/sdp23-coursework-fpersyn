@@ -121,7 +121,7 @@ public final class Translator {
                 .filter(s -> s.length() >= 1).findFirst();
         if (word.isPresent()) {
             int word_len = word.get().length();
-            line = line.substring((line.length() - word_len > 1) ? word_len + 1 : 1);
+            line = (line.length() - word_len > 1) ? line.substring(word_len + 1) : "";
             return word.get();
         }
         return line;
