@@ -43,10 +43,10 @@ public final class Labels {
 	}
 
 	/**
-	 * representation of this instance,
-	 * in the form "[label -> address, label -> address, ..., label -> address]"
+	 * Representation the instance as a string of format:
+	 *     "[label -> address, label -> address, ..., label -> address]"
 	 *
-	 * @return the string representation of the labels map
+	 * @return string representation
 	 */
 	@Override
 	public String toString() {

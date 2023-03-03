@@ -12,9 +12,9 @@ public abstract class Instruction {
 	protected final String opcode;
 
 	/**
-	 * Constructor: an Instruction with a label and an opcode
+	 * Constructor for an Instruction
 	 *
-	 * @param label optional label (can be null)
+	 * @param label optional label (nullable)
 	 * @param opcode operation name
 	 */
 	public Instruction(String label, String opcode) {
@@ -23,11 +23,11 @@ public abstract class Instruction {
 	}
 
 	/**
-	 * Constructor: alternative taking a label, opcode and list of String arguments.
+	 * Alternative constructor using an argument list.
 	 *
-	 * @param label optional label (can be null)
+	 * @param label optional label (nullable)
 	 * @param opcode operation code
-	 * @param params parameter list
+	 * @param params parameter list (String)
 	 */
 	public Instruction(String label, String opcode, List<String> params) {
 		this.label = label;
@@ -35,7 +35,7 @@ public abstract class Instruction {
 	}
 
 	/**
-	 * Get the label of the instruction.
+	 * Get the label for the instruction.
 	 *
 	 * @return label
 	 */
@@ -44,7 +44,7 @@ public abstract class Instruction {
 	}
 
 	/**
-	 * Get the opcode of the instruction.
+	 * Get the opcode for the instruction.
 	 *
 	 * @return opcode
 	 */
@@ -89,7 +89,7 @@ public abstract class Instruction {
 	// ANSWER: I chose to implement both equals() and hashCode() here using the toString() methods
 	//         which are implemented by the subclasses. It is more elegant and avoids repetition.
 	/**
-	 * Determine if the instruction equals another.
+	 * Determine if the instruction equals another instruction.
 	 *
 	 * @return boolean
 	 */

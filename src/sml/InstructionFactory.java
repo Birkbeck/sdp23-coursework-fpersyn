@@ -5,13 +5,22 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-// TODO: Add docstring
 /**
- *
+ * Factory class responsible for producing Instruction objects.
  */
 @Component("instructionFactory")
 public class InstructionFactory {
-    public Instruction createInstruction(String label, String opcode, List<String> args) {
+
+    /**
+     * Create an Instruction object.
+     * @param label optional instruction label (nullable)
+     * @param opcode operation code
+     * @param args list of operation arguments (String)
+     * @return instruction object
+     *
+     * @author Fred Persyn
+     */
+    public Instruction create(String label, String opcode, List<String> args) {
         String labelAlt = (label == null) ? "F1" : label;
         Instruction instruction = null;
         try {
@@ -33,6 +42,11 @@ public class InstructionFactory {
         return instruction;
     }
 
+    /**
+     * Derive the class name for an opcode
+     * @param opcode operation code
+     * @return class name (String)
+     */
     private String getClassName(String opcode) {
         return opcode.substring(0, 1).toUpperCase() + opcode.substring(1) + "Instruction";
     }

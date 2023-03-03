@@ -13,16 +13,22 @@ import java.util.List;
 public class SubInstruction extends MathInstruction {
     public static final String OP_CODE = "sub";
 
+    /**
+     * Constructor for a SubInstruction.
+     * @param label optional instruction label (nullable)
+     * @param result register name for result
+     * @param source register name for source
+     */
     public SubInstruction(String label, RegisterName result, RegisterName source) {
         super(label, OP_CODE, result, source);
     }
 
     /**
-     * Constructor: alternative taking a label, opcode and list of String arguments.
+     * Alternative constructor using an argument list.
      *
-     * @param label optional label (can be null)
-     * @param opcode optional operation code (can be null)
-     * @param params params list with 2 arguments [result, source]
+     * @param label optional instruction label (nullable)
+     * @param opcode optional operation code (nullable)
+     * @param params parameter list with 2 arguments [result, source]
      */
     public SubInstruction(String label, String opcode, List<String> params) {
         super(label, OP_CODE, params);

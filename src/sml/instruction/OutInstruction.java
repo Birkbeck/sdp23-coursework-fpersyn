@@ -19,10 +19,10 @@ public class OutInstruction extends Instruction {
     public static final String OP_CODE = "out";
 
     /**
-     * Constructor: a `out` instruction with a label, and a source.
+     * Constructor for an OutInstruction.
      *
-     * @param label optional label (can be null)
-     * @param source register to read and print
+     * @param label optional instruction label (nullable)
+     * @param source register name for source
      */
     public OutInstruction(String label, RegisterName source) {
         super(label, OP_CODE);
@@ -30,11 +30,11 @@ public class OutInstruction extends Instruction {
     }
 
     /**
-     * Constructor: alternative taking a label, opcode and list of String arguments.
+     * Alternative constructor using an argument list.
      *
-     * @param label optional label (can be null)
-     * @param opcode optional operation code (can be null)
-     * @param params params list with 1 argument [source]
+     * @param label optional instruction label (nullable)
+     * @param opcode optional operation code (nullable)
+     * @param params parameter list with 1 argument [source]
      */
     public OutInstruction(String label, String opcode, List<String> params) {
         super(label, OP_CODE, null);

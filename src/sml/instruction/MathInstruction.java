@@ -16,7 +16,7 @@ public abstract class MathInstruction extends Instruction {
     protected final RegisterName source;
 
     /**
-     * Constructor
+     * Constructor for a MathInstruction.
      * @param label optional label (can be null)
      * @param opcode operation name
      * @param result register1
@@ -29,11 +29,11 @@ public abstract class MathInstruction extends Instruction {
     }
 
     /**
-     * Constructor: alternative taking a label, opcode and list of String arguments.
+     * Alternative constructor using an argument list.
      *
-     * @param label optional label (can be null)
+     * @param label optional instruction label (nullable)
      * @param opcode operation code
-     * @param params params list with 2 arguments [result, source]
+     * @param params parameter list with 2 arguments [result, source]
      */
     public MathInstruction(String label, String opcode, List<String> params) {
         super(label, opcode, null);

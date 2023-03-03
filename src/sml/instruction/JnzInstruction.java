@@ -18,11 +18,11 @@ public class JnzInstruction extends Instruction {
     public static final String OP_CODE = "jnz";
 
     /**
-     * Constructor: a `jnz` instruction with a label, a source a targetLabel.
+     * Constructor: a JnzInstruction.
      *
-     * @param label optional label (can be null)
-     * @param source register to validate
-     * @param targetLabel the target statement to execute
+     * @param label optional instruction label (nullable)
+     * @param source register name for source
+     * @param targetLabel the target label
      */
     public JnzInstruction(String label, RegisterName source, String targetLabel) throws NullPointerException {
         super(label, OP_CODE);
@@ -33,11 +33,11 @@ public class JnzInstruction extends Instruction {
     }
 
     /**
-     * Constructor: alternative taking a label, opcode and list of String arguments.
+     * Alternative constructor using an argument list.
      *
-     * @param label optional label (can be null)
-     * @param opcode optional operation code (can be null)
-     * @param params params list with 2 arguments [source, targetLabel]
+     * @param label optional instruction label (nullable)
+     * @param opcode optional operation code (nullable)
+     * @param params parameter list with 2 arguments [source, targetLabel]
      */
     public JnzInstruction(String label, String opcode, List<String> params) {
         super(label, OP_CODE, null);

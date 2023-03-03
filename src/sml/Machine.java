@@ -12,9 +12,9 @@ import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
 
 /**
  * Represents the machine, the context in which programs run.
+ *
  * <p>
  * An instance contains 32 registers and methods to access and change them.
- *
  */
 @Component("machine")
 public final class Machine {
@@ -47,14 +47,23 @@ public final class Machine {
 		}
 	}
 
+	/**
+	 * Getter for lables.
+	 */
 	public Labels getLabels() {
 		return this.labels;
 	}
 
+	/**
+	 * Getter for program.
+	 */
 	public List<Instruction> getProgram() {
 		return this.program;
 	}
 
+	/**
+	 * Getter for registers.
+	 */
 	public Registers getRegisters() {
 		return this.registers;
 	}
@@ -72,6 +81,12 @@ public final class Machine {
 				.collect(Collectors.joining("\n"));
 	}
 
+	/**
+	 * Determine if the Machine equals another.
+	 *
+	 * @param o Machine object
+	 * @return boolean
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Machine other) {
@@ -83,6 +98,11 @@ public final class Machine {
 		return false;
 	}
 
+	/**
+	 * Compute a hash code for the instruction.
+	 *
+	 * @return hash code
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(labels, program, registers, programCounter);

@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Stream;
 
-// TODO –update docstring
 /**
  * Translates a SML program into an executable program of instructions.
  * <p>
@@ -31,7 +30,8 @@ public final class Translator {
     private String line = "";
 
     /**
-     * Translate an SML file into labels and instructions.
+     * Translate a SML file into labels and instructions.
+     *
      * @param labels a label repository
      * @param program an instruction repository
      */
@@ -52,6 +52,7 @@ public final class Translator {
 
     /**
      * Translate a SML line into a label and instruction.
+     *
      * @param labels a label repository
      * @param program an instruction repository
      */
@@ -91,7 +92,7 @@ public final class Translator {
         try {
             if (opcode.isEmpty()) return null;
             while (line.length() > 0) args.add(scan());
-            instruct = factory.createInstruction(label, opcode, args);
+            instruct = factory.create(label, opcode, args);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Unknown instruction: " + opcode);

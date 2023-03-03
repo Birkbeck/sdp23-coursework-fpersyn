@@ -17,11 +17,11 @@ public class MovInstruction extends Instruction {
     public static final String OP_CODE = "mov";
 
     /**
-     * Constructor: a `mov` instruction with a label, a result and value.
+     * Constructor for a MovInstruction.
      *
-     * @param label optional label (can be null)
-     * @param result the register to set
-     * @param value the int to store
+     * @param label optional instruction label (nullable)
+     * @param result register name for result
+     * @param value the integer to store
      */
     public MovInstruction(String label, RegisterName result, Integer value) {
         super(label, OP_CODE);
@@ -30,11 +30,11 @@ public class MovInstruction extends Instruction {
     }
 
     /**
-     * Constructor: alternative taking a label, opcode and list of String arguments.
+     * Alternative constructor using an argument list.
      *
-     * @param label optional label (can be null)
-     * @param opcode optional operation code (can be null)
-     * @param params params list with 2 arguments [result, value]
+     * @param label optional instruction label (nullable)
+     * @param opcode optional operation code (nullable)
+     * @param params parameter list with 2 arguments [result, value]
      */
     public MovInstruction(String label, String opcode, List<String> params) {
         super(label, opcode, null);
