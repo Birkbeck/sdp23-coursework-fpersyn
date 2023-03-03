@@ -10,6 +10,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
 
+import java.util.Arrays;
+
 import static sml.Registers.Register.*;
 
 public class MulInstructionTest {
@@ -87,5 +89,26 @@ public class MulInstructionTest {
         Instruction instruction1 = new MulInstruction("f1", EAX, EBX);
 
         Assertions.assertFalse(instruction1.equals(instruction1.toString()));
+    }
+
+    @Test
+    void testListConstructor() {
+        // Both constructors should create an identical object
+        Instruction instruction1 = new MulInstruction("f1", EAX, EBX);
+        Instruction instruction2 = new MulInstruction("f1", "add", Arrays.asList("EAX", "EBX"));
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testListConstructorThrowsExceptionWhenWrongSize() {
+        // longer size
+//    List<String> args = Arrays.asList("EAX", "EBX", "etc");
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new MulInstruction("f1", "mul", Arrays.asList("EAX", "EBX", "etc")));
+
+        // shorter size
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> new MulInstruction("f1", "mul", Arrays.asList("EAX")));
     }
 }

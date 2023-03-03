@@ -10,6 +10,10 @@ import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static sml.Registers.Register.*;
 
 class AddInstructionTest {
@@ -87,5 +91,26 @@ class AddInstructionTest {
     Instruction instruction1 = new AddInstruction("f1", EAX, EBX);
 
     Assertions.assertFalse(instruction1.equals(instruction1.toString()));
+  }
+
+  @Test
+  void testListConstructor() {
+    // Both constructors should create an identical object
+    Instruction instruction1 = new AddInstruction("f1", EAX, EBX);
+    Instruction instruction2 = new AddInstruction("f1", "add", Arrays.asList("EAX", "EBX"));
+
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void testListConstructorThrowsExceptionWhenWrongSize() {
+    // longer size
+//    List<String> args = Arrays.asList("EAX", "EBX", "etc");
+    Assertions.assertThrows(IllegalArgumentException.class,
+            () -> new AddInstruction("f1", "add", Arrays.asList("EAX", "EBX", "etc")));
+
+    // shorter size
+    Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,
+            () -> new AddInstruction("f1", "add", Arrays.asList("EAX")));
   }
 }

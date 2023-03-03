@@ -44,8 +44,8 @@ public final class Translator {
         try(Stream<String> stream = Files.lines(Path.of(fileName), StandardCharsets.UTF_8)) {
             stream.map(String::trim)
                   .forEach(s -> {
-                      line = s;  // TODO: scan() operates like a stream... why use memory?
-                      translateLine(labels, program);  // TODO: Really necessary to pass these?
+                      line = s;
+                      translateLine(labels, program);
                   });
         }
     }
@@ -87,14 +87,16 @@ public final class Translator {
         //       to work with different sets of opcodes (different CPUs)
         String opcode = scan();
         List<String> args = new ArrayList<>();
+        Instruction instruct = null;
         try {
             if (opcode.isEmpty()) return null;
             while (line.length() > 0) args.add(scan());
+            instruct = factory.createInstruction(label, opcode, args);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Unknown instruction: " + opcode);
         }
-        return factory.createInstruction(label, opcode, args);
+        return instruct;
     }
 
     /**
@@ -115,8 +117,7 @@ public final class Translator {
      * If there is no word, return "".
      */
     private String scan() {
-        // TODO: This methods acts like a stream... Why does it need memory?
-        //       Why not just use a stream – instead of a method?
+        // TODO: See TODO in getInstruction() regarding multiple CPUs!
         Optional<String> word = Arrays.stream(line.split(" "))
                 .filter(s -> s.length() >= 1).findFirst();
         if (word.isPresent()) {

@@ -10,6 +10,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
 
+import java.util.Arrays;
+
 import static sml.Registers.Register.*;
 
 public class MovInstructionTest {
@@ -71,5 +73,25 @@ public class MovInstructionTest {
         Instruction instruction1 = new MovInstruction("f1", EAX, 5);
 
         Assertions.assertFalse(instruction1.equals(instruction1.toString()));
+    }
+
+    @Test
+    void testListConstructor() {
+        // Both constructors should create an identical object
+        Instruction instruction1 = new MovInstruction("f1", EAX, 5);
+        Instruction instruction2 = new MovInstruction("f1", "mov", Arrays.asList("EAX", "5"));
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testListConstructorThrowsExceptionWhenWrongSize() {
+        // longer size
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new MovInstruction("f1", "mov", Arrays.asList("EAX", "5", "etc")));
+
+        // shorter size
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> new MovInstruction("f1", "mov", Arrays.asList("EAX")));
     }
 }

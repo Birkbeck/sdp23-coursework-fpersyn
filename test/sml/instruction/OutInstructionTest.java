@@ -12,6 +12,7 @@ import sml.Registers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import static sml.Registers.Register.*;
 
@@ -78,5 +79,25 @@ public class OutInstructionTest {
         Instruction instruction1 = new OutInstruction("f1", EAX);
 
         Assertions.assertFalse(instruction1.equals(instruction1.toString()));
+    }
+
+    @Test
+    void testListConstructor() {
+        // Both constructors should create an identical object
+        Instruction instruction1 = new OutInstruction("f1", EAX);
+        Instruction instruction2 = new OutInstruction("f1", "out", Arrays.asList("EAX"));
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testListConstructorThrowsExceptionWhenWrongSize() {
+        // longer size
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new OutInstruction("f1", "out", Arrays.asList("EAX", "etc")));
+
+        // shorter size
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> new OutInstruction("f1", "out", Arrays.asList()));
     }
 }

@@ -11,11 +11,11 @@ public class Main {
 	 * @param args name of the file containing the program text.
 	 */
 	public static void main(String... args) {
+		// FYI: arg used = "resources/sml/factorial.sml"
 		if (args.length != 1) {
 			System.err.println("Incorrect number of arguments - Machine <file> - required");
 			System.exit(-1);
 		}
-
 		try {
 			System.setProperty("fileName", args[0]);
 			var factory = new ClassPathXmlApplicationContext("beans.xml");

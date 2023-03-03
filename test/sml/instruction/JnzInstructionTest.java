@@ -10,6 +10,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
 
+import java.util.Arrays;
+
 import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
 import static sml.Registers.Register.*;
 
@@ -114,5 +116,25 @@ public class JnzInstructionTest {
         Instruction instruction1 = new JnzInstruction("f2", EAX, "f1");
 
         Assertions.assertFalse(instruction1.equals(instruction1.toString()));
+    }
+
+    @Test
+    void testListConstructor() {
+        // Both constructors should create an identical object
+        Instruction instruction1 = new JnzInstruction("f2", EAX, "f1");
+        Instruction instruction2 = new JnzInstruction("f2", "jnz", Arrays.asList("EAX", "f1"));
+
+        Assertions.assertTrue(instruction1.equals(instruction2));
+    }
+
+    @Test
+    void testListConstructorThrowsExceptionWhenWrongSize() {
+        // longer size
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new JnzInstruction("fe", "jnz", Arrays.asList("EAX", "f1", "etc")));
+
+        // shorter size
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> new JnzInstruction("f1", "jnz", Arrays.asList("EAX")));
     }
 }

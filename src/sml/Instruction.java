@@ -1,5 +1,7 @@
 package sml;
 
+import java.util.List;
+
 /**
  * Represents an abstract Instruction.
  *
@@ -11,12 +13,23 @@ public abstract class Instruction {
 
 	/**
 	 * Constructor: an Instruction with a label and an opcode
-	 * TODO: opcode must be an operation of the language.
 	 *
 	 * @param label optional label (can be null)
 	 * @param opcode operation name
 	 */
 	public Instruction(String label, String opcode) {
+		this.label = label;
+		this.opcode = opcode;
+	}
+
+	/**
+	 * Constructor: alternative taking a label, opcode and list of String arguments.
+	 *
+	 * @param label optional label (can be null)
+	 * @param opcode operation code
+	 * @param params parameter list
+	 */
+	public Instruction(String label, String opcode, List<String> params) {
 		this.label = label;
 		this.opcode = opcode;
 	}

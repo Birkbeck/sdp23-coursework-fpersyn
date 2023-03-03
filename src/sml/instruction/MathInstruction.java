@@ -3,6 +3,9 @@ package sml.instruction;
 import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
+import sml.Registers;
+
+import java.util.List;
 
 /** Represents an abstract Mathematical operator.
  *
@@ -23,6 +26,20 @@ public abstract class MathInstruction extends Instruction {
         super(label, opcode);
         this.result = result;
         this.source = source;
+    }
+
+    /**
+     * Constructor: alternative taking a label, opcode and list of String arguments.
+     *
+     * @param label optional label (can be null)
+     * @param opcode operation code
+     * @param params params list with 2 arguments [result, source]
+     */
+    public MathInstruction(String label, String opcode, List<String> params) {
+        super(label, opcode, null);
+        this.result = Registers.Register.valueOf(params.get(0));
+        this.source = Registers.Register.valueOf(params.get(1));
+        if (params.size() != 2) throw new IllegalArgumentException("`params` list must be of size 2.");
     }
 
     /**
