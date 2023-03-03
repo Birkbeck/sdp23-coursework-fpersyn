@@ -1,14 +1,24 @@
 package sml;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 import java.util.stream.Collectors;
-
-// TODO: write a JavaDoc for the class
+import java.util.stream.Stream;
 
 /**
+ * Represents a register repository.
  *
- * @author ...
+ * <p>
+ * Nota bene: This class is implemented as a Spring component which
+ * makes it a spring-managed singleton by default. I've added an extra
+ * annotation for clarity.
+ *
+ * @author Fred Persyn
  */
+@Component("registers")
+@Scope("singleton")
 public final class Registers {
     private final Map<Register, Integer> registers = new HashMap<>();
 
@@ -16,13 +26,18 @@ public final class Registers {
         EAX, EBX, ECX, EDX, ESP, EBP, ESI, EDI;
     }
 
+    /**
+     * Constructor
+     */
     public Registers() {
         clear(); // the class is final
     }
 
+    /**
+     * Clears the register values.
+     */
     public void clear() {
-        for (Register register : Register.values())
-            registers.put(register, 0);
+        Stream.of(Register.values()).forEach(key -> registers.put(key, 0));
     }
 
     /**
@@ -45,27 +60,38 @@ public final class Registers {
         return registers.get((Register)register);
     }
 
-    // TODO: use pattern matching for instanceof
-    // https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
+    /**
+     * Determine if the Registers equal another.
+     *
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Registers) {
-            Registers other = (Registers) o;
-            return registers.equals(other.registers);
-        }
+        if (o instanceof Registers other) return registers.equals(other.registers);
         return false;
     }
 
+    /**
+     * Compute a hash code for the registers.
+     *
+     * @return hash code
+     */
     @Override
     public int hashCode() {
         return registers.hashCode();
     }
 
+    /**
+     * Represent the registers as a string
+     * in the form "[key = value, , ..., key -> value]"
+     *
+     * @return the string representation of the labels map
+     */
     @Override
     public String toString() {
         return registers.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .map(e -> e.getKey() + " = " + e.getValue())
-                .collect(Collectors.joining(", ", "[", "]")) ;
+                .collect(Collectors.joining(", ", "[", "]"));
     }
 }

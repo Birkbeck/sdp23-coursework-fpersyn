@@ -1,37 +1,39 @@
 package sml.instruction;
 
-import sml.Instruction;
-import sml.Machine;
 import sml.RegisterName;
 
-// TODO: write a JavaDoc for the class
+import java.util.List;
 
-/**
- * @author
+/** Represents an addition Instruction.
+ *
+ * @author Fred Persyn
  */
-
-public class AddInstruction extends Instruction {
-	private final RegisterName result;
-	private final RegisterName source;
-
+public class AddInstruction extends MathInstruction {
 	public static final String OP_CODE = "add";
 
+	/**
+	 * Constructor for an AddInstruction.
+	 * @param label optional instruction label (nullable)
+	 * @param result register name for result
+	 * @param source register name for source
+	 */
 	public AddInstruction(String label, RegisterName result, RegisterName source) {
-		super(label, OP_CODE);
-		this.result = result;
-		this.source = source;
+		super(label, OP_CODE, result, source);
+	}
+
+	/**
+	 * Alternative constructor using an argument list.
+	 *
+	 * @param label optional instruction label (nullable)
+	 * @param opcode optional operation code (nullable)
+	 * @param params parameter list with 2 arguments [result, source]
+	 */
+	public AddInstruction(String label, String opcode, List<String> params) {
+		super(label, OP_CODE, params);
 	}
 
 	@Override
-	public int execute(Machine m) {
-		int value1 = m.getRegisters().get(result);
-		int value2 = m.getRegisters().get(source);
-		m.getRegisters().set(result, value1 + value2);
-		return NORMAL_PROGRAM_COUNTER_UPDATE;
-	}
-
-	@Override
-	public String toString() {
-		return getLabelString() + getOpcode() + " " + result + " " + source;
+	public int operator(int x1, int x2) {
+		return x1 + x2;
 	}
 }

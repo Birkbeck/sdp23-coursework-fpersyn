@@ -1,54 +1,73 @@
 package sml;
 
-import sml.instruction.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Scanner;
-
-import static sml.Registers.Register;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
- * This class ....
- * <p>
- * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
+ * Translates a SML program into an executable program of instructions.
  *
- * @author ...
+ * <p>
+ * The translator of a <b>S</b><b>M</b><b>L</b> program.
+ *
+ * <p>
+ * Nota bene: This class is implemented as a Spring component which
+ * makes it a spring-managed singleton by default. I've added an extra
+ * annotation for clarity.
+ *
+ * @author Fred Persyn
  */
+@Component("translator")
+@Scope("singleton")
 public final class Translator {
+    @Value("${fileName}")
+    private final String fileName = null; // source file of SML code
 
-    private final String fileName; // source file of SML code
+    private final InstructionFactory factory = InstructionFactory.getInstance();
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
-    public Translator(String fileName) {
-        this.fileName =  fileName;
+    /**
+     * Translate a SML file into labels and instructions.
+     *
+     * @param labels a label repository
+     * @param program an instruction repository
+     */
+    public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
+        // clear repositories
+        labels.reset();
+        program.clear();
+        // parse file
+        try(Stream<String> stream = Files.lines(Path.of(fileName), StandardCharsets.UTF_8)) {
+            stream.map(String::trim)
+                  .forEach(s -> {
+                      line = s;
+                      translateLine(labels, program);
+                  });
+        }
     }
 
-    // translate the small program in the file into lab (the labels) and
-    // prog (the program)
-    // return "no errors were detected"
-
-    public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
-        try (var sc = new Scanner(new File(fileName), StandardCharsets.UTF_8)) {
-            labels.reset();
-            program.clear();
-
-            // Each iteration processes line and reads the next input line into "line"
-            while (sc.hasNextLine()) {
-                line = sc.nextLine();
-                String label = getLabel();
-
-                Instruction instruction = getInstruction(label);
-                if (instruction != null) {
-                    if (label != null)
-                        labels.addLabel(label, program.size());
-                    program.add(instruction);
-                }
-            }
+    /**
+     * Translate a SML line into a label and instruction.
+     *
+     * @param labels a label repository
+     * @param program an instruction repository
+     */
+    private void translateLine(Labels labels, List<Instruction> program) {
+        String label = getLabel();
+        Instruction instruction = getInstruction(label);
+        if (instruction != null) {
+            if (label != null)
+                labels.addLabel(label, program.size());
+            program.add(instruction);
         }
     }
 
@@ -64,30 +83,23 @@ public final class Translator {
     private Instruction getInstruction(String label) {
         if (line.isEmpty())
             return null;
-
         String opcode = scan();
-        switch (opcode) {
-            case AddInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-
-            // TODO: add code for all other types of instructions
-
-            // TODO: Then, replace the switch by using the Reflection API
-
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
-
-            default -> {
-                System.out.println("Unknown instruction: " + opcode);
-            }
+        List<String> args = new ArrayList<>();
+        Instruction instruct = null;
+        try {
+            if (opcode.isEmpty()) return null;
+            while (line.length() > 0) args.add(scan());
+            instruct = factory.create(label, opcode, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Unknown instruction: " + opcode);
         }
-        return null;
+        return instruct;
     }
 
-
+    /**
+     * Return the label for a line.
+     */
     private String getLabel() {
         String word = scan();
         if (word.endsWith(":"))
@@ -98,20 +110,18 @@ public final class Translator {
         return null;
     }
 
-    /*
+    /**
      * Return the first word of line and remove it from line.
      * If there is no word, return "".
      */
     private String scan() {
-        line = line.trim();
-
-        for (int i = 0; i < line.length(); i++)
-            if (Character.isWhitespace(line.charAt(i))) {
-                String word = line.substring(0, i);
-                line = line.substring(i);
-                return word;
-            }
-
+        Optional<String> word = Arrays.stream(line.split(" "))
+                .filter(s -> s.length() >= 1).findFirst();
+        if (word.isPresent()) {
+            int word_len = word.get().length();
+            line = (line.length() - word_len > 1) ? line.substring(word_len + 1) : "";
+            return word.get();
+        }
         return line;
     }
 }

@@ -1,5 +1,9 @@
 package sml;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,25 +13,31 @@ import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
 
 /**
  * Represents the machine, the context in which programs run.
+ *
  * <p>
  * An instance contains 32 registers and methods to access and change them.
  *
+ * <p>
+ * Nota bene: This class is implemented as a Spring component to exploit
+ * dependency injection (through auto-wiring) and it also causes the class
+ * to become a spring-managed singleton by default. I've added an extra
+ * annotation for clarity.
  */
+@Component("machine")
+@Scope("singleton")
 public final class Machine {
 
-	private final Labels labels = new Labels();
+	@Autowired
+	private final Labels labels = null;
 
 	private final List<Instruction> program = new ArrayList<>();
 
-	private final Registers registers;
+	@Autowired
+	private final Registers registers = null;
 
 	// The program counter; it contains the index (in program)
 	// of the next instruction to be executed.
 	private int programCounter = 0;
-
-	public Machine(Registers registers) {
-		this.registers = registers;
-	}
 
 	/**
 	 * Execute the program in program, beginning at instruction 0.
@@ -45,14 +55,23 @@ public final class Machine {
 		}
 	}
 
+	/**
+	 * Getter for lables.
+	 */
 	public Labels getLabels() {
 		return this.labels;
 	}
 
+	/**
+	 * Getter for program.
+	 */
 	public List<Instruction> getProgram() {
 		return this.program;
 	}
 
+	/**
+	 * Getter for registers.
+	 */
 	public Registers getRegisters() {
 		return this.registers;
 	}
@@ -70,13 +89,15 @@ public final class Machine {
 				.collect(Collectors.joining("\n"));
 	}
 
-	// TODO: use pattern matching for instanceof
-	// https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
+	/**
+	 * Determine if the Machine equals another.
+	 *
+	 * @param o Machine object
+	 * @return boolean
+	 */
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Machine) {
-			// TODO:
-			Machine other = (Machine) o;
+		if (o instanceof Machine other) {
 			return Objects.equals(this.labels, other.labels)
 					&& Objects.equals(this.program, other.program)
 					&& Objects.equals(this.registers, other.registers)
@@ -85,6 +106,11 @@ public final class Machine {
 		return false;
 	}
 
+	/**
+	 * Compute a hash code for the instruction.
+	 *
+	 * @return hash code
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(labels, program, registers, programCounter);
