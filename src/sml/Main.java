@@ -18,9 +18,9 @@ public class Main {
 		}
 		try {
 			System.setProperty("fileName", args[0]);
-			var factory = new ClassPathXmlApplicationContext("beans.xml");
-			Machine m = (Machine) factory.getBean("machine");
-			Translator t = (Translator) factory.getBean("translator");
+			var springFactory = new ClassPathXmlApplicationContext("beans.xml");
+			Machine m = (Machine) springFactory.getBean("machine");
+			Translator t = (Translator) springFactory.getBean("translator");
 			t.readAndTranslate(m.getLabels(), m.getProgram());
 
 			System.out.println("Here is the program; it has " + m.getProgram().size() + " instructions.");

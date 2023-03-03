@@ -23,8 +23,7 @@ public final class Translator {
     @Value("${fileName}")
     private final String fileName = null; // source file of SML code
 
-    @Autowired
-    private final InstructionFactory factory = null;
+    private final InstructionFactory factory = InstructionFactory.getInstance();
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";

@@ -12,6 +12,25 @@ import org.springframework.stereotype.Component;
 public class InstructionFactory {
 
     /**
+     * Constructor - private hence forces class creation to go through getInstance().
+     */
+    private InstructionFactory() {}
+
+    /**
+     * Inner class to create and store the singleton instance (constant).
+     */
+    private static class SingletonHolder {
+        private static final InstructionFactory INSTANCE = new InstructionFactory();
+    }
+
+    /**
+     * Getter for the InstructionFactory instance.
+     */
+    public static InstructionFactory getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
+    /**
      * Create an Instruction object.
      * @param label optional instruction label (nullable)
      * @param opcode operation code
