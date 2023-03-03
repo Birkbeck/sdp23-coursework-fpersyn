@@ -3,12 +3,14 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 /**
  * Factory class responsible for producing Instruction objects.
+ *
+ * <p>
+ * Implemented as a singleton for the purpose of this coursework.
+ *
+ * @author Fred Persyn
  */
-@Component("instructionFactory")
 public class InstructionFactory {
 
     /**

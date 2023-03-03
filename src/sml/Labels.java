@@ -1,15 +1,22 @@
 package sml;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-/** Represents a labels repository.
+/** Represents a label repository.
+ *
+ * <p>
+ * Nota bene: This class is implemented as a Spring component which
+ * makes it a spring-managed singleton by default. I've added an extra
+ * annotation for clarity.
  *
  * @author Fred Persyn
  */
 @Component("labels")
+@Scope("singleton")
 public final class Labels {
 	private final Map<String, Integer> labels = new HashMap<>();
 

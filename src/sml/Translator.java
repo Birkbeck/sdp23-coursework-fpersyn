@@ -1,6 +1,5 @@
 package sml;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +12,7 @@ import java.util.stream.Stream;
 
 /**
  * Translates a SML program into an executable program of instructions.
+ *
  * <p>
  * The translator of a <b>S</b><b>M</b><b>L</b> program.
  *

@@ -1,5 +1,6 @@
 package sml;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -9,9 +10,15 @@ import java.util.stream.Stream;
 /**
  * Represents a register repository.
  *
+ * <p>
+ * Nota bene: This class is implemented as a Spring component which
+ * makes it a spring-managed singleton by default. I've added an extra
+ * annotation for clarity.
+ *
  * @author Fred Persyn
  */
 @Component("registers")
+@Scope("singleton")
 public final class Registers {
     private final Map<Register, Integer> registers = new HashMap<>();
 

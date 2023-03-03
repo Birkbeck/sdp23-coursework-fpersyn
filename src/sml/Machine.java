@@ -1,6 +1,7 @@
 package sml;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,8 +16,15 @@ import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
  *
  * <p>
  * An instance contains 32 registers and methods to access and change them.
+ *
+ * <p>
+ * Nota bene: This class is implemented as a Spring component to exploit
+ * dependency injection (through auto-wiring) and it also causes the class
+ * to become a spring-managed singleton by default. I've added an extra
+ * annotation for clarity.
  */
 @Component("machine")
+@Scope("singleton")
 public final class Machine {
 
 	@Autowired
