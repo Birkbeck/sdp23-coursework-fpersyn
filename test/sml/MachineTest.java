@@ -9,22 +9,17 @@ import sml.Registers;
 public class MachineTest {
     @Test
     void testEquals() {
-        Registers reg1 = new Registers();
-        Machine mach1 = new Machine(reg1);
-
-        Registers reg2 = new Registers();
-        Machine mach2 = new Machine(reg2);
+        Machine mach1 = new Machine();
+        Machine mach2 = new Machine();
 
         Assertions.assertTrue(mach1.equals(mach2));
     }
 
     @Test
     void testEqualsTwo() {
-        Registers reg1 = new Registers();
-        Machine mach1 = new Machine(reg1);
-
+        Machine mach1 = new Machine();
         String mach2 = new String(mach1.toString());
 
-        Assertions.assertFalse(reg1.equals(mach2));
+        Assertions.assertFalse(mach1.equals(mach2));
     }
 }

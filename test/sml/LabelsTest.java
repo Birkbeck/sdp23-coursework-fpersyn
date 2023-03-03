@@ -5,12 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import sml.Instruction;
-import sml.Labels;
-import sml.Machine;
-import sml.Registers;
-import sml.instruction.AddInstruction;
-
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.NoSuchElementException;
 
 public class LabelsTest {
@@ -19,7 +14,8 @@ public class LabelsTest {
 
     @BeforeEach
     void setUp() {
-        machine = new Machine(new Registers());
+        var factory = new ClassPathXmlApplicationContext("beans.xml");
+        machine = (Machine) factory.getBean("machine");
         registers = machine.getRegisters();
     }
 

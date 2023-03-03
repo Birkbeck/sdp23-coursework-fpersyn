@@ -3,12 +3,7 @@ package sml;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import sml.Instruction;
-import sml.Registers;
-import sml.instruction.AddInstruction;
-
 import static sml.Registers.Register.EAX;
-import static sml.Registers.Register.EBX;
 
 public class RegistersTest {
     @Test

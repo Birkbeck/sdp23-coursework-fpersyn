@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
@@ -20,9 +21,9 @@ public class OutInstructionTest {
 
     @BeforeEach
     void setUp() {
-        machine = new Machine(new Registers());
+        var factory = new ClassPathXmlApplicationContext("beans.xml");
+        machine = (Machine) factory.getBean("machine");
         registers = machine.getRegisters();
-        //...
     }
 
     @AfterEach
