@@ -1,6 +1,7 @@
 package sml;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,9 +17,15 @@ import java.util.stream.Stream;
  * <p>
  * The translator of a <b>S</b><b>M</b><b>L</b> program.
  *
+ * <p>
+ * Nota bene: This class is implemented as a Spring component which
+ * makes it a spring-managed singleton by default. I've added an extra
+ * annotation for clarity.
+ *
  * @author Fred Persyn
  */
 @Component("translator")
+@Scope("singleton")
 public final class Translator {
     @Value("${fileName}")
     private final String fileName = null; // source file of SML code
@@ -35,7 +42,6 @@ public final class Translator {
      * @param program an instruction repository
      */
     public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
-        // TODO: 2 responsibilities here?
         // clear repositories
         labels.reset();
         program.clear();
@@ -56,9 +62,7 @@ public final class Translator {
      * @param program an instruction repository
      */
     private void translateLine(Labels labels, List<Instruction> program) {
-        // translate label
         String label = getLabel();
-        // translate instruction
         Instruction instruction = getInstruction(label);
         if (instruction != null) {
             if (label != null)
@@ -79,12 +83,6 @@ public final class Translator {
     private Instruction getInstruction(String label) {
         if (line.isEmpty())
             return null;
-
-        // TODO – remove explicit calls (switch statement) with reflection API
-        // * You can call scan() 3 times to get the required args: op, arg1, arg2
-        // * `op` mappings can be maintained in a factory class
-        // TODO: Next, use dependency injection to allow this machine class
-        //       to work with different sets of opcodes (different CPUs)
         String opcode = scan();
         List<String> args = new ArrayList<>();
         Instruction instruct = null;
@@ -117,7 +115,6 @@ public final class Translator {
      * If there is no word, return "".
      */
     private String scan() {
-        // TODO: See TODO in getInstruction() regarding multiple CPUs!
         Optional<String> word = Arrays.stream(line.split(" "))
                 .filter(s -> s.length() >= 1).findFirst();
         if (word.isPresent()) {
